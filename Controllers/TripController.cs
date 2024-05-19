@@ -79,8 +79,8 @@ public class TripController: ControllerBase
            await _context.SaveChangesAsync();
         }
 
-        var client = _context.Clients
-            .Where(c => c.Pesel == clientTrip.Pesel).First();
+        var client = await _context.Clients
+            .FirstOrDefaultAsync(c => c.Pesel == clientTrip.Pesel);
 
         if (_context.ClientTrips
                 .Where(ct => ct.Idclient == client.Idclient 
@@ -103,7 +103,7 @@ public class TripController: ControllerBase
         {
             Idclient = client.Idclient,
             Idtrip = clientTrip.IdTrip,
-            //Registeredat = DateTime.Now()
+            //Registeredat = DateTime.Now
         };
        await _context.AddAsync(clientTripEntity);
        await _context.SaveChangesAsync();
